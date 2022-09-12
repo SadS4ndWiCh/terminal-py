@@ -1,0 +1,4 @@
+__pycache__/
+
+venv/
+emoji_to_unicode.py
