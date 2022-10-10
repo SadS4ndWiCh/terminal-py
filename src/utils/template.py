@@ -17,7 +17,7 @@ def get_template_data(term: Terminal):
 		"with_three_folder": term.get_folder_range(3),
 		"path": term.current_path,
 		"now": now,
-		**term.get_enviroments_infos(),
+		**get_enviroments_infos(term),
 		**COLORS,
 		**EMOJIS
 	}
