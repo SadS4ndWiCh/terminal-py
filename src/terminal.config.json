@@ -18,7 +18,7 @@
 				"type": "header"
 			},
 			{
-				"content": "{f_cyan}{with_prev_folder}{reset}",
+				"content": "{f_cyan}{with_three_folder}{reset}",
 				"newline": false,
 				"type": "header"
 			},
