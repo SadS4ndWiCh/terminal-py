@@ -9,10 +9,14 @@ from src.utils.formatting import parse_instruction
 from src.utils.template import get_template_data
 from src.utils.enviroments import get_enviroment_type
 
+from src.exceptions.terminal import ConfigsNotFound, ConfigsNotLoaded, ThemeNotFound
+
 class Terminal:
 	current_path: Path = Path(getcwd())
 	envs: dict[str, Path] = []
 	configs: dict = None
+	__theme: dict = None
+
 	history: list[str] = []
 	
 	@staticmethod
@@ -33,7 +37,7 @@ class Terminal:
 	def render():
 		Terminal.envs = get_enviroment_type(Terminal.current_path, {})
 
-		theme_blocks = Terminal.configs['theme']['blocks']
+		theme_blocks = Terminal.__theme['blocks']
 		for block in theme_blocks:
 			block_env = block.get('enviroment', 'None')
 
@@ -55,7 +59,25 @@ class Terminal:
 
 	@staticmethod
 	def load_configs():
-		Terminal.configs = json.load(open('src/terminal.config.json', 'r', encoding='utf-8'))
+		Terminal.configs = json.load(open('terminal.config.json', 'r', encoding='utf-8'))
+
+		if (Terminal.configs == None):
+			raise ConfigsNotLoaded("Não foi possível carregar as configurações do terminal")
+
+	@staticmethod
+	def load_theme():
+		if (Terminal.configs == None):
+			raise ConfigsNotFound("As configurações do terminal não foram encontradas")
+
+		theme_name = Terminal.configs.get("theme", "default")
+		themes_path = Terminal.configs.get("themes_path")
+
+		try:
+			theme_path = Path(themes_path).resolve().joinpath(f"{theme_name}.theme.json")
+			theme = json.load(open(theme_path, "r", encoding="utf-8"))
+			Terminal.__theme = theme
+		except FileNotFoundError:
+			raise ThemeNotFound(f"Não foi encontrado um tema com o nome {theme_name!r}")
 
 	@staticmethod
 	def load_commands():
@@ -66,6 +88,7 @@ class Terminal:
 	@staticmethod
 	def setup():
 		Terminal.load_configs()
+		Terminal.load_theme()
 		Terminal.load_commands()
 
 	@staticmethod
