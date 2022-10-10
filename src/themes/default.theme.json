@@ -1,0 +1,29 @@
+{
+	"blocks": [
+		{
+			"content": "{b_white}{f_black}(dev){reset}",
+			"newline": false,
+			"type": "header"
+		},
+		{
+			"content": "{login}",
+			"newline": false,
+			"type": "header"
+		},
+		{
+			"content": "in",
+			"newline": false,
+			"type": "header"
+		},
+		{
+			"content": "{with_three_folder}",
+			"newline": false,
+			"type": "header"
+		},
+		{
+			"content": "$",
+			"newline": true,
+			"type": "input"
+		}
+	]
+}
