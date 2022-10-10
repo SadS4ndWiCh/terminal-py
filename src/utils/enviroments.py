@@ -33,6 +33,8 @@ def get_enviroment_type(path: Path | str, found_envs={}):
   
   return found_envs
 
+# --------------------------------------------------------
+
 def get_nodejs_package_version(path: Path | str):
   if (path == None or not 'package.json' in listdir(path)): return
 
@@ -60,7 +62,6 @@ def get_venv_version(path: Path | str):
 
 # --------------------------------------------------------
 
-@staticmethod
 def get_enviroments_infos(term: Terminal):
   envs_funcs = {
     'python': [get_venv_version, EnviromentsData.python.value],
